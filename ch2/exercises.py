@@ -33,16 +33,13 @@ def q1b(n=10,train_size = 5, test_size = 95):
     
     mu = K[:,:train_size] @ np.linalg.solve(K[:train_size,:train_size], y_train)
     sigma = K - K[:,:train_size] @ np.linalg.solve(K[:train_size,:train_size],K[:train_size,:])
-    print(mu.shape)
-    print(sigma.shape)
 
     gp_samples = np.random.multivariate_normal(mu,sigma,size=n)
     
-    plt.plot(*zip(*sorted(zip(xs,ys))),linestyle='dashed',marker='_')
+    plt.plot(*zip(*sorted(zip(xs,ys))),linestyle='dashed')
     plt.vlines(x_train,ymin=min(min(ys),min(gp_samples.reshape(-1))),ymax=max(max(ys),max(gp_samples.reshape(-1))))
     plt.plot(*zip(*sorted(zip(xs,gp_samples.T))))
     plt.show()
-
 
 #q3
 """
@@ -62,27 +59,6 @@ def q3(n=30,d=50):
     plt.plot(xs,gp_samples.T)
     plt.show()
 
-
-def explicit_basis():
-    xs = np.linspace(-5,5,train_size + test_size)
-    np.random.shuffle(xs)
-    K = k_matrix(xs)
-
-    ys = np.cos(xs**2/5)+np.cos(xs)+0.1*xs**2
-
-    x_train,x_test,y_train,y_test = train_test_split(xs,ys,test_size=test_size,shuffle=False)
-    
-    mu = K[:,:train_size] @ np.linalg.solve(K[:train_size,:train_size], y_train)
-    sigma = K - K[:,:train_size] @ np.linalg.solve(K[:train_size,:train_size],K[:train_size,:])
-    print(mu.shape)
-    print(sigma.shape)
-
-    gp_samples = np.random.multivariate_normal(mu,sigma,size=n)
-    
-    plt.plot(*zip(*sorted(zip(xs,ys))),linestyle='dashed',marker='_')
-    plt.vlines(x_train,ymin=min(min(ys),min(gp_samples.reshape(-1))),ymax=max(max(ys),max(gp_samples.reshape(-1))))
-    plt.plot(*zip(*sorted(zip(xs,gp_samples.T))))
-    plt.show()
 
 if __name__=="__main__":
     q1a()
